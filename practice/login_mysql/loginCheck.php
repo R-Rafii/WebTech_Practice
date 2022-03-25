@@ -1,4 +1,5 @@
 <?php
+require('userModel.php');
 if(isset($_REQUEST['mLogin'])){
 
     include ('database.php');
@@ -7,27 +8,23 @@ if(isset($_REQUEST['mLogin'])){
     $password = $_REQUEST['password'];
 
     if($username != null && $password != null){
+
+        $status = login($username, $password);
         
        
-    $sql = "SELECT * FROM Login WHERE UserName = '{$username}' AND UserPassword = '{$password}'";
-    $sqlm = "SELECT * FROM Login WHERE UserName = '{$username}' AND UserPassword = '{$password}' AND UserRole = 'manager'";
-    $sqlw = "SELECT * FROM Login WHERE UserName = '{$username}' AND UserPassword = '{$password}' AND UserRole = 'worker'";
-    $sqls = "SELECT * FROM Login WHERE UserName = '{$username}' AND UserPassword = '{$password}' AND UserRole = 'seller'";
-     $result = mysqli_query($con,$sql);
-     $role1 = mysqli_query($con,$sqlm);
-     $role2 = mysqli_query($con,$sqlw);
-     $role3 = mysqli_query($con,$sqls);
+   
      
-     if(mysqli_num_rows($result))
+     if($status)
     {
+        echo "o" ;
         setcookie('m_status', 'true', time()+4600, '/');
-        if(mysqli_num_rows($role1)){
+        if($role = "manager"){
             header('location: u1.php');
         }
-        else if(mysqli_num_rows($role2)){
+        else if($role = "worker"){
             header('location: u2.php');
         }
-        else if(mysqli_num_rows($role3)){
+        else if($role = "seller"){
             header('location: u3.php');
         }
         
