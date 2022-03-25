@@ -1,3 +1,3 @@
 <?php
-echo "This is manager";
+echo "This is seller";
 ?>
